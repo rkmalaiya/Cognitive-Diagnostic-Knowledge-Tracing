@@ -1,0 +1,10 @@
+# PCTeX Project File, Version 1.1
+	name: alg
+	texformat: latex
+	typesetmode: DVI
+	spellwordlist: american
+alg.idx
+	wndpos: 1 -1 -1 -1 -1 660 31 1415 438
+	zorder: 0
+	edit: 0
+alg.log

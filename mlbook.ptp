@@ -1,0 +1,28 @@
+# PCTeX Project File, Version 1.1
+	name: mlbook
+	texformat: latex
+	typesetmode: DVI
+	spellwordlist: american
+mlbook.tex
+	wndpos: 1 -1 -1 -1 -1 52 52 1840 949
+	zorder: 0
+	edit: 1273
+mlbook.log
+krantz.cls
+frontmatter\preamble.tex
+multind.sty
+mlbook.aux
+frontmatter\symbollist.aux
+frontmatter\preface.aux
+chapters\chap4\chap4.aux
+frontmatter\symbollist.tex
+mlbook.toc
+alg.ind
+frontmatter\preface.tex
+chapters\chap4\chap4.tex
+	wndpos: 1 -1 -1 -1 -1 130 130 1944 955
+	zorder: 1
+	edit: 18822
+mlbook.bbl
+subind.ind
+mlbook.DVI

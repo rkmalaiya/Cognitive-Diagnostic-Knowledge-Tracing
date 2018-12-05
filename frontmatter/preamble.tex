@@ -1,0 +1,59 @@
+%\usepackage{showkeys}  % added by Richard Golden (comment out for final version)
+\usepackage{fixltx2e,fix-cm} 
+\usepackage{amssymb}
+\usepackage{amsmath}
+ \usepackage{amsthm}
+  \usepackage{amssymb} % added by Richard Golden
+  \usepackage{amsbsy} % added by Richard Golden
+  \newcommand{\bfs}{\boldsymbol} % added by Richard Golden
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{subfigure}
+%%\usepackage[makeindex]{splitidx} % added by Richard Golden
+\usepackage{multind}
+\usepackage{multicol}
+\usepackage{exercise}
+\usepackage{algpseudocode}
+\usepackage[section]{algorithm}
+\usepackage{tabularx}
+  \theoremstyle{plain}% default
+  \newtheorem{theorem}{Theorem}[section]  % richard golden
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem*{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{definition}{Definition}[section] % Richard Golden
+  \newtheorem{condition}{Condition}
+\newtheorem{example}{Example}[section]  
+%
+\makeatletter
+\renewcommand{\theExercise}{\if@ExeStared\else\thesection.\arabic{\@ExerciseCounter}\fi}
+\makeatother
+\makeindex{subind}
+\makeindex{alg}
+
+\makeatletter
+\def\smlitemize{%
+  \ifnum \@itemdepth >\thr@@\@toodeep\else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\rightmargin1pc\def\makelabel##1{\hss\llap{##1}}}%
+  \fi}
+\let\endsmlitemize =\endlist
+\makeatother
+
+% Following minipage environment created by Richard Golden
+\newenvironment{smlpage}[1]{
+\begin{minipage}[c]{5.1in}
+\medskip
+\begin{large}{\bf #1}\end{large}
+}
+{\smallskip \end{minipage}}
+
+\newcommand{\textbulletspace}{\textbullet \hspace{0.15in}}
+
+
+\frenchspacing
+\tolerance=5000

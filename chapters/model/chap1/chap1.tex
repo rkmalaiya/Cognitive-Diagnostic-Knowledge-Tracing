@@ -1,0 +1,169 @@
+\chapter{Mathematical Model}
+
+\begin{shadowbox}{\begin{smlpage}{Objectives}
+\begin{large}
+\begin{smlitemize}
+\begin{item}
+Statistical Environment
+\end{item}
+\begin{item}
+Probability Model
+\end{item}
+\begin{item}
+Objective Function
+\end{item}
+\begin{item}
+Derivatives of Objective Function
+\end{item}
+\begin{item}
+Parameter Estimation
+\end{item}
+\end{smlitemize}
+\end{large}
+\end{smlpage}}\end{shadowbox} \\
+
+\section{Statistical Environment}
+
+
+\begin{definition}[Student Response]
+
+\begin{multline}
+    {\bf X}^{i}(t)  = \left[ 
+\left[\bfs{x}^{i}_{1}(t), \bfs{m}^{i}_{1}(t) \right],
+\left[\bfs{x}^{i}_{2}(t), \bfs{m}^{i}_{2}(t) \right]...
+\left[\bfs{x}^{i}_{J}(t), \bfs{m}^{i}_{J}(t) \right]
+\right]
+\\ \text{and} \\
+    \bfs{x}^{i}_{j}(t) = \begin{cases}
+    \vec{0}, & \text{if student skips $j^{th}$ question}.\\
+    \bfs{\zeta}^{d(j)}_{z}, & \text{if student selects $z^{th}$ answer combination for $j^{th}$ question}.
+  \end{cases} 
+\end{multline}
+
+  where $\bfs{\zeta}^{d(j)}_{z}$ is $z^{th}$ column from an identity matrix of $d(j)$ dimension and $\bfs{\zeta}^{d(j)}_{z'}$ represents ideal answer choice
+
+\begin{displaymath} 
+  m^{i}_{j}(t)=\begin{cases}
+    1, & \text{if $i^{th}$ student attempts $j^{th}$ question}.\\
+    0, & \text{otherwise}.
+  \end{cases}
+\end{displaymath}
+\begin{displaymath} 
+  \bfs{m}^{i}(t)= \vec{0} \text{ if $i^{th}$ student misses the $t^{th}$ assessment period}
+\end{displaymath}
+Example: Student responses can be represented as:
+\[
+\bfs{x}^1_3 = \{0, 0, 0, 1, 0, 0\} \text{if student chose $z=4$ answer combination, where $j=3$, $d(3) = 6$ }\\
+\]
+\end{definition}
+
+\begin{definition}[$\bfs{Q}$ Matrix]
+Let $\bfs{Q}$ matrix be defined such that
+
+\begin{equation*}
+ \bfs{Q} = [ {\bfs{q}_1, \bfs{q}_2, ..., \bfs{q}_J}]
+\end{equation*}
+where 
+\begin{equation*}
+    \bfs{q}_{j} \in \{ 0,1 \}^{d(j) \times K}
+\end{equation*}
+
+\begin{equation}
+  q_{jd(j)k}=\begin{cases}
+    1, & \text{ if $ k^{th} $ skill is present for $d(j)^{th}$ response. }\\
+    0, & \text{otherwise.}
+  \end{cases} 
+\end{equation}
+
+
+\end{definition}
+
+\begin{definition}[ $\bfs{U}$ Matrix]
+Let $\bfs{U}  \in \{ 0,1 \}^{K \times K}$ be a matrix defined such that
+
+\begin{equation}
+  \bfs{u}_{mk}=\begin{cases}
+    1, & \text{ if mastery in $ k^{th} $ learning objective influences } \\
+    & \text{ probability of mastery in $m^{th}$ learning objective in furture.   }\\
+    0, & \text{otherwise.}
+  \end{cases}
+\end{equation}
+here we assume that a single learning objective requires only single latent skill
+\end{definition}
+
+\begin{definition}[Student Situation Model]
+\begin{equation}
+\bfs{\alpha}^{i}(t) \equiv [\alpha^{i}_{1}(t), \alpha^{i}_{2}(t)...\alpha^{i}_{K}(t) ]
+\end{equation}
+
+$\bfs{\alpha}^{i}(t)$ represents $i^{th}$ student's situation model during $t^{th}$ assessment period
+\begin{equation}
+  \alpha^{i}_{k}=\begin{cases}
+    1, & \text{ $\iff$ $ k^{th} $ latent skill is present in $i^{th}$ student's} \\
+    & \text{  situation model at $t$ time period assessment }\\
+    0, & \text{otherwise.}
+  \end{cases}
+\end{equation}
+\end{definition}
+
+\section{Probability Model}
+\begin{definition}[Stochastic Sequence]
+
+\begin{equation}
+    \left ( \bfs{X}^{i}(t), \bfs{m}^{i}(t), \bfs{\alpha}^{i}(t) \right )_{t=0}^{T} 
+\end{equation}
+
+\end{definition}
+
+\begin{definition}[Emission Probability Model]
+
+\begin{equation}
+    P(\bfs{x}^{i}_{j} | \bfs{\alpha^{i}}, \bfs{\beta}_{j}) = \phi \left (  \beta_{_{jR}} \eta^{i}_{j}(t) + \beta_{_{jR}} \left ( 1 - \eta^{i}_{j}(t) \right ) \right )
+\end{equation}
+where 
+\begin{equation*}
+    \eta^{i}_{j}(t) = \prod_{k=1}^{K} \left ( \alpha^{i}_{k} (t) \right )^{q_{_{jd(j)k}}}
+\end{equation*}
+\begin{equation*}
+    \bfs{\beta}_{j} = \left[ \beta_{_{jR}}, \beta_{_{jG}} \right]^{T}
+\end{equation*}
+\begin{equation*}
+    \phi(\psi) = \left ( 1 + \exp(-\psi) \right )^{-1}
+\end{equation*}
+\end{definition}
+
+\begin{definition}[Transition Probability Model]
+\begin{equation*}
+    P \left ( \bfs{\alpha^{i} (t+1)} | \bfs{\alpha^{i} (t)}, \bfs{\theta}^{i}  \right ) =
+\end{equation*}
+\begin{equation}
+    \prod^{K}_{k=1} 
+    \left ( P \left ( \alpha^{i}_{k} (t+1) = 1 | \bfs{\alpha}^{i} (t), \bfs{\theta}^{i}  \right )^{\alpha^{i}_{k}(t+1)}
+    P \left ( \alpha (t+1)^{i}_{k} = 0 | \bfs{\alpha}^{i} (t), \bfs{\theta}^{i}  \right )^{ \left(1 - \alpha^{i}_{k}(t+1)\right )} 
+    \right )
+\end{equation}
+where 
+
+\begin{equation*}
+     P \left ( \alpha^{i}_{m} (t+1) = 1 | \bfs{\alpha}^{i} (t), \bfs{\theta}^{i}  \right ) =
+     \phi\left ( \theta_{i,m,0} + \theta_{i,m,m}\alpha_{im}(t) + \sum_{k=1,k \neq m}^{K} \theta_{i,m,k}u_{m,k}\alpha_{ik}(t) \right )
+\end{equation*}
+
+    $\theta^{i} \in \mathbb{R}^{K\times K} $
+
+    $\theta_{i,m,0}$ is student-specific course learning objective mastery parameter. Specifies level of difficulty??
+
+    $\theta_{i,m,k}$ measures the likelihood the student will demonstrate mastery of the $m^{th}$ learning objective latent skill given the student is currently demonstrating mastery of the $k^{th}$ learning objective latent skill.
+    
+    $\theta_{i,m,m}$ is student-specific situation model momentum parameter. It captures likelihood that student situation model will change when learning process evolves from $t$ to $(t+1)$
+    
+    For CDKT, $\theta_{i,m,m} = \theta_{i,k,k} \forall k,m = {1,...,K}$ which indicates that each latent skill has equal likelihood of transitioning from $t$ to $(t+1)$
+\end{definition}
+
+
+
+
+
+
+
+

@@ -1,0 +1,240 @@
+\chapter*{Preface}
+\label{preface}
+
+\section*{Objectives}
+Statistical Machine Learning is a multidisciplinary field that integrates topics from the fields of 
+Machine learning, Mathematical Statistics, and
+Numerical Optimization Theory. 
+It is concerned with the problem of the development and evaluation of machines capable of inference
+and learning within an environment characterized by statistical uncertainty.
+The recent rapid growth in the variety and complexity of new 
+machine learning architectures requires the development of improved methods for communicating
+relevant technological tools for supporting statistical machine learning algorithm analysis and design. 
+The main objective of this textbook is to provide
+students, engineers, and scientists with practical established tools from mathematical
+statistics and nonlinear optimization theory to support the
+analysis and design of both existing and new state-of-the-art machine learning algorithms.
+
+It is important to emphasize that this is a mathematics
+textbook intended for readers interested in a concise mathematically rigorous introduction to the
+statistical machine learning literature. For readers interested in non-mathematical introductions to the machine learning
+literature, many alternative options are available.
+For example, there are many useful software-oriented machine learning textbooks 
+which support the rapid development and evaluation of a wide range of machine learning architectures
+(Geron, 2017; Muller and Guida, 2017, Bell, 2015, James et al., 2017). A student can use these software tools to rapidly create and evaluate a bewildering wide range
+of machine learning architectures. After an initial exposure to such tools, the student will want
+to obtain a deeper understanding of such systems in order to properly apply and properly evaluate such tools.
+To address this issue, there are now many excellent textbooks 
+(e.g., Hastie el al., 2001; Bishop et al., Stork et al., Ripley et al.; Hastie and Tibshirani, 2016; Goodfellow and Bengio, 2016)
+which provide detailed discussions of a variety
+of machine learning architectures and principles by focusing attention on basic principles.
+Such textbooks 
+specifically omit particular technical mathematical details under the assumption that students without
+the relevant technical background should not be distracted, while students with
+graduate level training in optimization theory and mathematical statistics can obtain such details elsewhere.
+
+However, such mathematical
+technical details are essential for providing a principled methodology for supporting the communication,
+analysis, and design of novel nonlinear machine learning architectures. Thus, it is desirable to 
+explicitly incorporate such details into self-contained concise discussions of machine learning applications.
+Technical mathematical
+details support improved methods for machine learning algorithm specification, validation, classification,
+and understanding. Such methods can provide important support for rapid machine learning algorithm development
+and deployment as well as novel insights into reusable modular software design architectures. 
+
+\section*{Book Overview}
+Part 1 is concerned with introducing the concept of machine learning algorithms through examples and
+providing mathematical tools for specifying such algorithms.
+Chapter 1 informally shows, by example, that the large class of supervised, unsupervised, and 
+reinforcement learning algorithms
+which are the focus of this textbook
+may be interpreted as nonlinear optimization algorithms. 
+Chapter 3 provides a formal description of this large class of nonlinear optimization algorithms and
+shows how optimization may be semantically interpreted within a rational decision making framework.
+
+Part 2 is concerned with characterizing the asymptotic behavior of deterministic learning machines.
+Chapter 6 provides sufficient conditions  for characterizing the
+asymptotic behavior of discrete-time and continuous-time time-invariant dynamical systems.
+Chapter 7 provides sufficient conditions for ensuring a large class of deterministic batch learning algorithms
+converge to the critical points of the objective function for learning.
+
+Part 3 is concerned with characterizing the asymptotic behavior of stochastic inference and stochastic learning machines.
+Chapter 11 develops the asymptotic convergence theory for Monte Carlo Markov Chains for the special case where
+the Markov chain is defined on a finite state space. Chapter 12 provides relevant asymptotic
+convergence analyses of adaptive learning algorithms for both
+passive and reactive learning environments.
+
+Part 4 is concerned with the problem of characterizing the generalization performance of a machine learning algorithm.
+Chapter 13 discusses the analysis and design of semantically interpretable objective functions.
+Chapters 14, 15, and 16 show how both bootstrap simulation methods (Chapter 14) and asymptotic formulas
+(Chapters 15, 16) can be used to characterize
+the generalization performance of the class of machine learning algorithms considered here.  
+
+In addition, the book includes self-contained relevant introductions to 
+real analysis (Chapter 2, 5), 
+linear algebra (Chapter 4), measure theory (Chapter 8),
+and stochastic sequences (Chapter 9) to reduce the required mathematical prerequisites for the analyses presented here.
+
+\section*{Targeted Audience}
+The textbook is written for a multidisciplinary audience with multidisciplinary objectives.
+It is assumed students taking
+a course based upon this book have taken lower-division coursework in linear algebra and calculus
+as well as an upper-division calculus-based probability theory course.
+Students with these mathematical prerequisites will find this textbook challenging but
+nevertheless accessible.
+
+\section*{Notation}
+Scalars will not be written in boldface notation and typically will be lowercase letters
+(e.g., $a$ might be used to denote a scalar variable).
+Following conventional notation in the engineering and optimization sciences, an uppercase
+boldface letter  denotes a matrix (e.g., ${\bf A}$ might be used to denote a matrix), 
+while a lowercase boldface letter denotes a vector (e.g., ${\bf a}$).
+The notation ${\bf\tilde{A}}$ indicates a matrix consisting of random
+variables. The notation ${\bf \hat{A}}$ typically indicates a matrix consisting of random functions.
+Thus, ${\bf A}$ may be a realization of $\bf\hat{A}$ or $\bf\tilde{A}$. 
+This notation has the advantage of clearly distinguishing between 
+random scalar variables, random vectors, and random matrices as well as their realizations.
+
+However, this latter notation is non-standard in mathematical statistics
+where uppercase letters typically denote random variables and lowercase letters their realizations.
+Unfortunately, mathematical statistics notation typically does not explicitly distinguish between
+matrices and vectors. Because of the complexity of the engineering problems encountered in this
+text, a notation that can distinguish between matrices, vectors, and scalars is necessary. This is
+a serious notation difficulty with using standard mathematical statistics notation.
+
+Standard engineering and optimization theory notation can not be used without modification, however,
+because it is also fundamentally necessary to distinguish random vectors from their realizations.
+Unfortunately, standard notation in the engineering and optimization literature does not usually
+focus upon carefully distinguishing between random vectors and their realizations. This is also
+a serious notational difficulty with using standard engineering notation.
+
+This intrinsic problem with developing an unambiguous multidisciplinary
+mathematical notation remains unresolved in the literature. Econometricians have examined 
+this problem but a satisfactory resolution has not been
+broadly accepted by both engineers and statisticians (see Abadir and Magnus, 2002, for
+further discussion). The notation developed in this book corresponds to one possible resolution
+of this problem. In particular, the notation introduced here
+may be viewed as an ''enhanced'' version of the typical matrix-vector notation used in areas of engineering mathematics
+(e.g., linear algebra, dynamical systems theory, deterministic optimization theory,
+mathematical psychology, and econometrics) which carefully distinguishes between random variables
+and their realizations.
+\nocite{AbMa2002}
+
+\section*{Instructional Strategies}
+The material in this book is suitable for an advanced two semester statistical machine learning sequence for 
+motivated advanced undergraduate students or graduate students in computer science, electrical engineering,
+or applied mathematics. 
+The first course in the sequence titled {\em Neural Net Math}, covers Chapters 1, 2, 3, 4, 5, 8, 9, and 10
+and moves quickly through Chapter 3.
+The prerequisites for this first course are: linear algebra and an
+upper-division calculus-based probability course.
+The second course in the sequence, {\em Statistical Machine Learning},  covers the 
+material in Chapters 6, 7, 11, 12, 13, 14, 15, 16 and moves quickly through Chapter 6.
+The first course {\em Neural Net Math} is a required prerequisite for the course 
+{\em Statistical Machine Learning}. 
+
+At the end of each chapter, there is a section entitled {\em Further Reading}
+to enable the student to pursue the concepts in the chapter in greater depth.
+The majority of the problems are designed to help students master the key theorems
+and apply them in the analysis and design of a wide range of machine learning algorithms.
+In addition, some algorithm design and software implementation
+problems are included to help students understand
+the practical application of the theory. 
+
+Additional software illustrating book concepts, supplementary instructional materials and book revisions are available
+at the author's website: 
+\begin{verbatim}
+www.statisticalmachinelearning.com
+\end{verbatim}
+
+
+\section*{Acknowledgements}
+It's a great pleasure to acknowledge my past multidisciplinary group of mentors:
+James L. McClelland, David E. Rumelhart,
+James A. Anderson, 
+David B. Cooper, and Halbert L. White.
+This multidisciplinary group of scientists have shaped and influenced the 
+multidisciplinary mathematical modeling approach developed here.
+
+I am grateful to my parents Sandra Feller Golden and Ralph Golden for their support
+and encouragement to explore spaces of possibilities.
+I would also like to thank my wife, Karen Liebes Golden, for her patience and support throughout this project
+as well as throughout my career.
+
+And finally, I am eternally grateful to the legions of students who struggled with me during the development
+of this text. These students contributed to the development of this text in profound ways
+by posing a simple question or displaying a quick puzzled expression! 
+
+\section*{Advice and Encouragement}
+
+Here's some useful advice for students preparing to read this book. \\
+I have personally found this
+advice valuable in my work throughout the years.
+\begin{itemize}
+
+\begin{item}
+\quote{ {\bf ''Genius is 1\% inspiration and 99\% perspiration.''} } \\
+{\em Thomas Alva Edison}, 20{\em th} Century American Inventor
+\\
+\end{item}
+\begin{item}
+\quote{ {\bf ''From one thing, know ten thousand things.''} } \\
+{\em Miyamoto Musashi}, 16{\em th} Century Samurai Warrior
+\\
+\end{item}
+ \begin{item}
+\quote{ {\bf ''There are many paths to enlightenment. Be sure to take one with a heart.''} } \\
+{\em Lao Tzu}, 1{\em st} Century Chinese Philosopher
+\end{item}
+\end{itemize}
+
+And, last but not least, {\em both} of the following important insights.
+\begin{itemize}
+\begin{item}
+\quote{{\bf ''The good God is in the detail.''} } \\
+{\em Gustave Flaubert}, 19{\em th} Century French Novelist
+\\
+\end{item}
+\begin{item}
+\quote{{\bf ''The Devil is in the details.''} }\\
+{\em Ludwig Mies van der Roche}, 20{\em th} Century German Architect
+\end{item}
+\end{itemize}
+
+\newpage
+%
+%\section*{Alternative Titles (temporary section!)}
+%Selecting a title is a tricky business. Key words in the title need to reflect the
+%content of the material. Ideally, typing in the title into a search engine such
+%as "google" should bring up "similar types of materials". 
+%Some alternative titles to consider...
+%Please feel free to share your opinions about the title of the book with me.
+%Your ideas may evolve as you go through this course sequence!
+%
+%\begin{enumerate}
+%  \item "Mathematical Optimization Methods for Statistical Machine Learning"
+%  \item "Dynamical Statistical Learning Machine Analysis and Design"
+%   \item "Mathematical Methods for Learning Machine Analysis and Design" (but more general then learning machines)
+%   \item"Analysis and Design of Dynamic Inference Machines"
+%   \item"Mathematical Modeling with Learning Machine Applications"
+%   \item"Learning Machine Analysis and Design"
+%   \item"Statistical Learning Machine Analysis and Design"
+%   \item "Statistical Machine Learning: A Descent Algorithm Perspective"
+%   \item "Analysis and Design of Intelligent Dynamical Systems"
+%   \item "Elementary Mathematical Analysis of Inference and Learning Machines"
+%   \item"Mathematical Inference and Learning Machine Analysis"
+%  \item "Inference and Learning Machine Mathematical Analysis and Design"
+%  \item "Mathematical Analysis and Design of Optimal Inference Machines"
+%  \item "Mathematical Analysis and Design of Intelligent Statistical Optimization Algorithms" 
+%  \item "Dynamical Statistical Inference and Learning Machines: Mathematical Analysis and Design"
+%  \item "Dynamic Optimization Algorithms for Statistical Inference and Learning Machine Design"
+%  \item "Statistical Inference and Learning Machine Design using Dynamic Optimization Algorithms"
+%  \item "Statistical Inference and Learning Machine Analysis and Design using Dynamic Optimization Algorithms"
+%  \item "Statistical Pattern Recognition Dynamical Systems"
+%  \item "Statistical Pattern Recognition using Dynamic Optimization Algorithms"
+%  \item "Statistical Machine Learning: A Mathematical Optimization Perspective"
+%  \end{enumerate}
+
+
+
+

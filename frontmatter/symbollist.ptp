@@ -1,0 +1,9 @@
+# PCTeX Project File, Version 1.1
+	name: symbollist
+	texformat: latex
+	typesetmode: DVI
+	spellwordlist: american
+symbollist.tex
+	wndpos: 1 -1 -1 -1 -1 506 90 1690 512
+	zorder: 0
+	edit: 467

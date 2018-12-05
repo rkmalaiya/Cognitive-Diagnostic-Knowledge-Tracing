@@ -1,0 +1,45 @@
+\usepackage{fixltx2e,fix-cm} 
+\usepackage{amssymb}
+\usepackage{amsmath}
+ \usepackage{amsthm}
+  \usepackage{amssymb} % added by Richard Golden
+  \usepackage{amsbsy} % added by Richard Golden
+  \newcommand{\bfs}{\boldsymbol} % added by Richard Golden
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{subfigure}
+%%\usepackage[makeindex]{splitidx} % added by Richard Golden
+\usepackage{multind}
+\usepackage{multicol}
+\usepackage{exercise}
+\usepackage{algpseudocode}
+\usepackage[section]{algorithm}
+\usepackage{tabularx}
+  \theoremstyle{plain}% default
+  \newtheorem{theorem}{Theorem}[section]  % richard golden
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem*{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{definition}{Definition}[section] % Richard Golden
+  \newtheorem{condition}{Condition}
+\newtheorem{example}{Example}[section]
+%
+\makeatletter
+\renewcommand{\theExercise}{\if@ExeStared\else\thesection.\arabic{\@ExerciseCounter}\fi}
+\makeatother
+\makeindex{subind}
+\makeindex{alg}
+
+% Following minipage environment created by Richard Golden
+\newenvironment{smlpage}[1]{
+\begin{minipage}[c]{5.4in}
+\medskip
+\begin{large}{\bf #1}\end{large} \smallskip \\
+}
+{\smallskip \end{minipage}}
+
+\newcommand{\textbulletspace}{\textbullet \hspace{0.15in}}
+
+
+\frenchspacing
+\tolerance=5000

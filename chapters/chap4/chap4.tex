@@ -1,0 +1,493 @@
+\chapter{CDKT}
+
+\begin{shadowbox}{\begin{smlpage}{Learning Objectives}
+\begin{large}
+\begin{smlitemize}
+\begin{item}
+Use Advanced Matrix Notation and Operators
+\end{item}
+\begin{item}
+Use SVD to Design Linear Hidden Unit Basis Functions
+\end{item}
+\begin{item}
+Use SVD to Design Linear Learning Machines 
+\end{item}
+\end{smlitemize}
+\end{large}
+\end{smlpage}}\end{shadowbox} \\
+
+\section{Statistical Environment A}
+
+${\cal R}^{m \times n}$  $m$ by $n$  ${\bf A}$)  
+
+ $d$ ${\cal R}^d$.
+
+
+
+\begin{definition}[Student Response]
+ ${\bf a}^T \in {\cal R}^{1 \times d}$ denotes the {\em transpose} of
+the column vector ${\bf a} \in {\cal R}^{d}$.
+\end{definition}
+
+\begin{definition}[Q Matrix]
+Let ${\bf W} \in {\cal R}^{m \times n}$ be a matrix defined such that
+${\bf W} = [{\bf w}_1, \ldots, {\bf w}_n]$ where each
+column vector ${\bf w}_i \in {\cal R}^m$
+for $i = 1, \ldots, n$. Then, 
+${\bf vec} : {\cal R}^{m \times n} \rightarrow {\cal R}^{mn}$ function
+is defined such that: 
+${\bf vec}({\bf W}) = \left[ {\bf w}_1^T, \ldots, {\bf w}_n^T \right]^T$.
+\end{definition}
+
+The ${\bf vec}$ function stacks the columns of a matrix ${\bf W}$ consisting
+of $m$ rows and $n$ columns
+into a column vector whose dimension is $mn$.
+
+\begin{definition}[${\bf vec}_m^{-1}$ Function]
+The function ${\bf vec}^{-1} _m: {\cal R}^{mn} \rightarrow {\cal R}^{m \times n}$
+is defined such that:
+${\bf vec}^{-1}_m \left( {\bf vec}({\bf W})\right) = {\bf W}$
+for all ${\bf W} \in {\cal R}^{m \times n}$.
+\end{definition}
+
+\begin{definition}[Euclidean (L2) Norm]
+Let ${\bf v} \in {\cal R}^d$.
+The {\em Euclidean norm} or {\em L2 norm} of ${\bf v}$ denoted by $|{\bf v}|$
+is defined such that: 
+\begin{displaymath}
+|{\bf v}| = \sqrt{ \sum_{i=1}^d (v_i)^2 }.
+\end{displaymath}
+\end{definition}
+
+The Euclidean norm of a matrix ${\bf M} \in {\cal R}^{m \times n}$,
+$|{\bf M}|$, is defined by $|{\bf M}| = |{\bf vec}({\bf M})|$.
+The Euclidean norm is also called the {\em L2 norm}.
+
+\begin{definition}[L1 Norm]
+Let ${\bf v} \in {\cal R}^d$.
+The {\em L1 norm} of ${\bf v}$ denoted by $|{\bf v}|_1$
+is defined such that: 
+\begin{displaymath}
+|{\bf v}|_1 = \sum_{i=1}^d |v_i|.
+\end{displaymath}
+\end{definition}
+
+The L1 norm of a matrix ${\bf M} \in {\cal R}^{m \times n}$,
+$|{\bf M}|_1$, is defined by $|{\bf M}|_1 = |{\bf vec}({\bf M})|_1$.
+
+\begin{definition}[Infinity Norm]
+Let ${\bf v} \equiv [v_1, \ldots, v_d]^T \in {\cal R}^d$.
+The {\em infinity norm} of ${\bf v}$ denoted by $|{\bf v}|_{\infty}$
+is defined such that: 
+\begin{displaymath}
+|{\bf v}|_{\infty} = \max{ \{ |v_1|, \ldots, |v_d| \} }.
+\end{displaymath}
+\end{definition}
+
+The infinity norm of a matrix ${\bf M} \in {\cal R}^{m \times n}$,
+$|{\bf M}|_{\infty}$, is defined by $|{\bf M}|_{\infty} = |{\bf vec}({\bf M})|_{\infty}$.
+
+
+\begin{definition}[Dot Product]
+Let ${\bf a} = [a_1, \ldots, a_d]^T \in {\cal R}^d$ and 
+${\bf b} = [b_1, \ldots, b_d]^T \in {\cal R}^d$.
+The {\em dot product} or {\em inner product} of two column vectors
+${\bf a}, {\bf b} \in {\cal R}^d$ is defined by the formula:
+\begin{displaymath}
+{\bf a}^T {\bf b} = \sum_{i=1}^d a_i b_i.
+\end{displaymath}
+\end{definition}
+
+Note that the linear basis function is defined by the dot product of a parameter vector
+${\bfs \theta}$ and an input pattern vector ${\bf s}$. In addition, the sigmoidal
+basis function and soft plus basis function are both monotonically increasing functions
+of the dot product of a parameter vector and an input pattern vector. If
+${\bf x}, {\bf y} \in \{0,1\}^d$, then ${\bf x}^T {\bf y}$ is a Hamming distance function
+which counts the number of ones
+common to both ${\bf x}$ and ${\bf y}$.
+
+\begin{definition}[Angular Separation Between Two Vectors]
+Let ${\bf x}$ and ${\bf y}$ be $d$-dimensional real column vectors with positive magnitudes.
+Let {\em normalized vector} $\ddot{\bf x} \equiv {\bf x}/|{\bf x}|$.
+Let $\ddot{\bf y} \equiv {\bf y}/|{\bf y}|$.
+Let $cos^{-1} : {\bf R} \rightarrow [0,360)$ be the inverse of the cosine function whose
+domain is in degrees. Then the {\em angular separation} $\psi$ between the column vector ${\bf x}$ and
+column vector ${\bf y}$ is given by the formula
+\begin{displaymath}
+\psi = cos^{-1} \left( \ddot{\bf x}^T \ddot{\bf y} \right).
+\end{displaymath}
+If either ${\bf x}$ or ${\bf y}$ is a vector of zeros, then the angular separation
+between ${\bf x}$ and ${\bf y}$ is defined as $90$ degrees.
+\end{definition}
+
+The angular separation between two vectors can be interpreted as a type of similarity measure
+which indicates whether the {\em pattern of information} in the two vectors is similar.
+For example, the Euclidean distance between the vectors 
+\begin{displaymath}
+{\bf x} \equiv [1,0,1,0,1,0,1,0] \;\;\; \text{and} \;\;\;
+{\bf y} \equiv [1001,0,1001,0,1001,0,1001,0]
+\end{displaymath}
+is equal to $2000$ indicating ${\bf x}$ and ${\bf y}$ are quite different. However,
+the angular separation 
+between ${\bf x}$ and ${\bf y}$
+is zero indicating ${\bf x}$ and ${\bf y}$ are pointing in the same direction.
+
+\begin{example}[Response of a Linear Basis Function]
+Let ${\bfs \theta} \in {\cal R}^d$ be a column parameter vector.
+Assume that ${\bfs \theta}$ is chosen such that $|{\bfs \theta}| = 1$.
+Let ${\bf s} \in {\cal R}^d$ be a column input pattern vector.
+The response $y = {\bfs \theta}^T {\bf s}$ is defined as the output
+of a linear basis function unit for a given input pattern vector ${\bf s}$.
+For what input patterns will the linear basis function unit have the largest possible
+response? For what input patterns will the linear basis function have a zero
+response?
+
+{\bf Solution.}
+Let $\psi$ denote the angular separation between ${\bfs \theta}$ and ${\bf s}$.
+Using the definition of angular separation, 
+\begin{equation}
+\label{linearunitangle}
+y = {\bfs \theta}^T {\bf s} = cos (\psi) |{\bfs \theta}| |{\bf s}|
+\end{equation}
+where $cos (\psi)$ denotes the cosine of the angle $\psi$.
+When the input pattern vector ${\bf s}$ points in the same direction as the
+parameter vector ${\bfs \theta}$, then the $cos(\psi)$ is equal to one
+and the maximal response $y = |{\bfs \theta}| |{\bf s}|$ is obtained.
+When ${\bf s}$ is in the $d-1$-dimensional subspace whose elements
+are orthogonal to the $d$-dimensional parameter vector
+${\bfs \theta}$, the angular separation between parameter vector ${\bfs \theta}$
+and input pattern vector ${\bf s}$ is equal to zero so the response $y = 0$. 
+\end{example}
+
+
+\begin{example}[Document Retrieval Using Dot Products]
+In Example \ref{example:Ch1:LSI}, it was assumed that the term by document matrix 
+${\bf W}$ consists only of zeros and ones.
+Let $w_{ij}$ denote the entry in the $i$th row and $j$th column of the term by document matrix. 
+For example, one might choose $w_{ij} = n_{ij}$ where $n_{ij}$
+is the number of times that the $i$th term occurs in 
+document $j$. In this situation, the Hamming distance between two columns or two rows of the
+term by document matrix can not be computed. However,
+the cosine of the angular separation between a document vector and a query vector
+is a useful way of measuring the similarity between the document and the query.
+
+Notice that in many applications some terms in the term by document
+matrix ${\bf W}$ might have very high
+frequencies of occurrence  while other terms might have very low frequencies of occurrence. Thus,
+in practice, it is often convenient to construct ${\bf W}$ such that the $ij$th element
+of ${\bf W}$, $w_{ij}$, is a monotonically increasing function of the
+ frequency of occurrence of a term in a document but compensates
+for terms which are either exceptionally rare or exceptionally common.
+For example, choosing the $ij$th element of the term by document
+matrix, $w_{ij}$, such that $w_{ij} = \log (1 + n_{ij})$ compensates for very common words
+(e.g., ``the'' or ``a'').  
+Choosing $w_{ij} = (\log (1 + n_{ij})) \log \left(1 + (N/M_i) \right)$ 
+where $N$ is the total number of documents and $M_i$ is the number of documents which contain
+the $i$th term is called the TF-IDF (term frequency inverse-document frequency) method
+which compensates for both exceptionally rare and exceptionally common terms.
+\end{example} 
+
+\begin{definition}[Matrix Multiplication]
+Let ${\bf A} \in {\cal R}^{m \times n}$ and ${\bf B} \in {\cal R}^{q \times r}$.
+If $n = q$, then we say that ${\bf A}$ and ${\bf B}$
+are {\em conformable}. If ${\bf A}$ and ${\bf B}$ are conformable, then the matrix
+${\bf A}$ {\em multiplied} by the matrix ${\bf B}$ 
+is defined by a matrix with $m$ rows and $r$ columns whose $ij$th element
+is given by the dot product of the $i$th row of ${\bf A}$ with the $j$th column of
+${\bf B}$, $i = 1, \ldots, m$, $j = 1, \ldots, r$. 
+The notation ${\bf A}{\bf B}$ is the {\em matrix product} of the operation 
+of multiplying the matrix ${\bf A}$ by the matrix ${\bf B}$.
+\end{definition}
+
+Matrix multiplication is not commutative. Let ${\bf A}$ be a matrix consisting of
+two rows and three columns. Let ${\bf B}$ be a matrix with three rows and four
+columns. The matrix multiplication ${\bf A}{\bf B}$ exists because 
+${\bf A}$ and ${\bf B}$ are conformable when ${\bf A}$ is multiplied by ${\bf B}$
+but ${\bf B} {\bf A}$ is not conformable.
+
+Moreover, even when both ${\bf A}{\bf B}$ and ${\bf B}{\bf A}$ are both conformable,
+it is not necessarily the case that ${\bf A}{\bf B} = {\bf B}{\bf A}$.
+Let ${\bf x}$ be the column vector $[3, 4, 0]^T$. Then ${\bf x} {\bf x}^T$ is a
+$3$-dimensional matrix whose first row is $[9, 12, 0]$, whose second row is
+$[12, 16, 0]$, and whose third row is a row vector of zeros. On the other hand,
+${\bf x}^T {\bf x}$ is the number $25$. 
+
+\begin{example}[Linear Pattern Associator]
+\label{example:Ch4:LinearAssociator}
+Consider an inference machine which generates a $m$-dimensional response
+vector ${\bf y}_i$ when presented with a $d$-dimensional input column pattern vector
+${\bf s}_i$ for $i = 1, \ldots, n$. Assume, furthermore, the column vector 
+${\bf y}_i = {\bf W} {\bf s}_i$ for $i = 1, \ldots, n$ where the parameter
+vector of this inference machine is ${\bfs \theta} \equiv {\bf vec}({\bf W}^T)$.
+The relationship
+${\bf y}_i = {\bf W} {\bf s}_i$ for $i = 1, \ldots, n$ may be more compactly
+written as ${\bf Y} = {\bf W} {\bf S}$
+where ${\bf Y} \equiv [{\bf y}_1, \ldots, {\bf y}_n]$ and
+${\bf S} \equiv [{\bf s}_1, \ldots, {\bf s}_n]$.
+\end{example}
+
+\begin{example}[Equivalence of Single Layer and Multi-Layer Linear Machines]
+Let ${\bf S} \equiv [{\bf s}_1, \ldots, {\bf s}_n]$ be a matrix whose columns are $n$
+input pattern vectors. Let ${\bf H}$ be an $m$ by $n$ dimensional
+matrix whose columns are the $n$ respective responses to the $n$ input pattern vectors in ${\bf S}$
+so that:
+${\bf H} = {\bf V} {\bf S}$.
+Let ${\bf Y}$ be a $q$ by $n$ dimensional matrix whose columns are the $n$ respective responses
+to the $n$ columns of ${\bf H}$ so that:
+${\bf Y} = {\bf W} {\bf H}$.
+This implements a multilayer network architecture as shown in Figure \ref{fig:Ch4:MultiLayerLinearNet}
+Show that this multilayer linear network can be replaced with an equivalent single layer linear network
+as described in Example \ref{example:Ch4:LinearAssociator}.
+
+{\bf Solution.}
+Substitute the relation ${\bf H} = {\bf V} {\bf S}$ into
+${\bf Y} = {\bf W} {\bf H}$ to obtain:
+${\bf Y} = {\bf W} {\bf V} {\bf S}$. Then define ${\bf M} = {\bf W} {\bf V}$ to obtain
+${\bf Y} = {\bf M} {\bf S}$.
+\end{example}
+
+
+\begin{figure}[tbp] % float placement: (h)ere, page (t)op, page (b)ottom, other (p)age
+  \centering
+  % file name: C:/Users/rmgco/Documents/Book/smlcrcMarch4-2018/figures/chap4/LinearEncoder/LinearBasisFunctionNet.eps
+  \includegraphics[bb=0 0 360 216,width=5.5in,height=3.3in,keepaspectratio]{figures/chap4/LinearEncoder/LinearEncoder.eps}
+  \caption{{\bf A multilayer linear feedforward neural network is equivalent to a single layer linear feedforward neural network.}
+The left-hand network depicts a linear 
+response function which generates a response pattern ${\bf y}$ given input pattern
+${\bf s}$ using the formulas ${\bf y} = {\bf W}{\bf h}$ and ${\bf h} = {\bf V}{\bf s}$.
+The right-hand network implements a linear response function which generates a response
+pattern ${\bf y}$ given input pattern ${\bf s}$ using the formula ${\bf y} = {\bf Q}{\bf s}$.
+By choosing ${\bf Q} = {\bf W}{\bf V}$ both networks implement the same linear response function.}
+  \label{fig:Ch4:MultiLayerLinearNet}
+\end{figure}
+
+
+
+
+
+
+ 
+
+
+
+\begin{definition}[Commutation Matrix]
+The {\em commutation matrix}  ${\cal {\bfs K}}_{ur} \in {\cal R}^{ur \times ur}$ is defined such that for all
+${\bf C} \in {\cal R}^{u \times r}$:
+\begin{displaymath}
+{\cal {\bfs K}}_{ur}{\bf vec} \left( {\bf C} \right) = {\bf vec} \left( {\bf C}^T  \right).
+\end{displaymath} 
+\end{definition}
+
+Let ${\bf A}$ be a two by three matrix whose first row is $[1, 2, 3]$ and
+whose second row is $[4, 5, 6]$. Then ${\bf vec}({\bf A}^T) = [1, 2, 3, 4, 5, 6]^T$
+and ${\bf vec}({\bf A}) = [1, 4, 2, 5, 3, 6]$. In addition, there always exists a 
+commutation matrix ${\bfs K}_{2,3}$ such that ${\bfs K}_{2,3} {\bf vec}({\bf A}) = {\bf vec}({\bf A}^T)$.
+In particular, if it is desired that the $j$th element of ${\bf vec}({\bf A})$ is placed in the
+$k$th element of ${\bf vec}({\bf A}^T)$ choose the $k$th row of the commutation
+matrix ${\bfs K}_{2,3}$ to be the $j$th row of a $6$-dimensional identity matrix.
+
+\begin{definition}[DIAG Matrix Operator]
+The {\em diagonalization matrix operator} ${\bf DIAG} : {\cal R}^d \rightarrow {\cal R}^{d \times d}$
+is defined such that for all ${\bf x} \in {\cal R}^d$:
+${\bf DIAG}({\bf x})$ is a $d$-dimensional square diagonal matrix whose $i$th on-diagonal element is
+the $i$th element of ${\bf x}$ for $i = 1, \ldots, d$.
+\end{definition}
+
+For example, ${\bf DIAG}({\bf 1}_q) = {\bf I}_q$.
+
+\begin{definition}[Matrix Inverse (Square Matrix with Full Rank)]
+Let ${\bf M}$ be a $d$-dimensional square matrix with full rank $d$.
+Assume, in addition, there exists a $d$-dimensional square matrix ${\bf M}^{-1}$ 
+with full rank $d$ such that:
+\begin{displaymath}
+{\bf M} {\bf M}^{-1} = {\bf M}^{-1} {\bf M} = {\bf I}_d.
+\end{displaymath}
+The matrix ${\bf M}^{-1}$ is called the {\em matrix inverse} of ${\bf M}$. 
+\end{definition}
+
+\begin{example}[Matrix Representation of Clustering Measure]
+Referring to Example \ref{example:Ch1:ClusteringEx1},
+show that $V$ in (\ref{equation:Ch1:ClusteringMeasure}) can be rewritten such that:
+\begin{equation}
+\label{equation:Ch4:ClusteringMeasure}
+V({\bf s}_1, \ldots, {\bf s}_K) = \sum_{k=1}^K |{\bf s}_k|^2  - 
+\sum_{k=1}^K {\bf s}_k^T \left[{\bf D}^{-1/2} {\bf W} {\bf D}^{-1/2} \right] {\bf s}_k.
+\end{equation}
+\end{example}
+
+\begin{definition}[Trace Matrix Operator]
+Let ${\bf W} \in {\cal R}^{d \times d}$.
+The {\em trace} matrix operator $tr : {\cal R}^{d \times d} \rightarrow {\cal R}$
+is defined such that $tr({\bf W})$ is the sum of the on-diagonal elements
+of ${\bf W}$.
+\end{definition}
+
+\begin{theorem}[Cyclic Property of $tr$ Operator]
+\label{Ch4:Theorem:CyclicTrace}
+Let ${\bf A}$, ${\bf B}$, ${\bf C} \in {\cal R}^{d \times d}$. Then
+\begin{displaymath}
+tr({\bf A}{\bf B}{\bf C}) = tr({\bf C}{\bf A}{\bf B}).
+\end{displaymath}
+\end{theorem}
+
+\begin{proof}
+See XXX
+\end{proof}
+
+\begin{definition}[Hadamard Product]
+If ${\bf A} \in {\cal R}^{r \times s}$ and ${\bf B} \in {\cal R}^{r \times s}$,
+then ${\bf A} \odot {\bf B}$ is called the {\em Hadamard product} and is a
+matrix of dimension $r$ by $s$ whose $ij$th element is equal to the $ijth$
+element of ${\bf A}$ multiplied by the $ij$th element of ${\bf B}$, $i = 1, \ldots, r$,
+$j = 1, \ldots, s$.
+\end{definition}
+
+Let ${\bf a} = [1, 2, 3]$. Let ${\bf b} = [1, 0, -1]$. Then
+${\bf c} \equiv {\bf a} \odot {\bf b} = [1,  0, -3]$.
+Also note that ${\bf a} {\bf b}^T = {\bf 1}_3^T [{\bf a} \odot {\bf b}]^T = -2$.
+
+\begin{definition}[Kronecker Product]
+If ${\bf A} \in {\cal R}^{r \times s}$ and ${\bf B} \in {\cal R}^{t \times u}$,
+then the {\em Kronecker product} 
+${\bf A} \otimes {\bf B} \in {\cal R}^{rt \times su}$ and consists
+of a $rs$ submatrices where the submatrix in the $i$th row and $j$th column
+of ${\bf A} \otimes {\bf B}$ is defined as $a_{ij} {\bf B}$ where $a_{ij}$ is the
+$ij$th element of ${\bf A}$, $i = 1 \ldots r$ and $j = 1, \ldots, s$.
+\end{definition}
+
+
+\begin{theorem}[Determinant Products]
+Let ${\bf A}$ and ${\bf B}$ be square matrices.
+Then 
+\begin{displaymath}
+det\left( {\bf A} {\bf B} \right) = det ({\bf A}) det({\bf B})
+\end{displaymath}
+\end{theorem}
+
+\begin{proof}
+See xXX
+\end{proof}
+
+
+\begin{example}[Alternative Eigenspectrum Definition of Positive Definiteness]
+Let ${\bf W}$ be a real symmetric matrix. Then,
+\begin{displaymath}
+{\bf x}^T {\bf W} {\bf x} = 
+{\bf x}^T \left[ \sum_{i=1}^d \lambda_i {\bf e}_i {\bf e}_i^T \right] {\bf x} =
+\sum_{i=1}^d \lambda_i ({\bf e}_i^T {\bf x})^2.
+\end{displaymath}
+Thus, 
+ ${\bf W}$ is positive semidefinite when the eigenvalues of ${\bf W}$ are non-negative.
+Furthermore
+${\bf W}$ is positive definite when all eigenvalues of ${\bf W}$ are strictly positive
+\end{example}
+
+\begin{exerciselist}
+\item
+\label{E4.3-1}
+{\bf Training a Linear Machine with Scalar Response}
+Let the training data ${\cal D}_n$ be a collection of ordered pairs
+defined such that:
+\begin{displaymath}
+{\cal D}_n \equiv \{ (y_1, {\bf s}_1)), \ldots, (y_n, {\bf s}_n) \}
+\end{displaymath}
+where $y_i \in {\cal R}$ and ${\bf s}_i \in {\cal R}^d$.
+Assume ${\bf S} \equiv [{\bf s}_1, \ldots, {\bf s}_n]$ has full row rank.
+
+The goal of learning is to construct a column vector
+${\bf w}^*$ which is a minimizer of 
+\begin{displaymath}
+\ell({\bf w}) \equiv \sum_{i=1}^n \left|y_i - {\bf w}^T {\bf s}_i \right|^2.
+\end{displaymath}
+Obtain an explict formula for ${\bf w}^*$ using matrix notation.
+
+
+\item 
+\item {\bf Least Squares L2 Regularization}
+Repeat the analysis of Example \ref{Ex:LinearMachineSolution} but rather than finding an
+exact solution that 
+minimizes the objective function in (\ref{LinearMachineMXSolution}), find
+an exact solution that minimizes the objective
+function:
+\begin{equation}
+\label{linearlearn1}
+\ell({\bf W}) = \lambda \left|{\bf vec}({\bf W}) \right|^2 + 
+\left| {\bf vec}\left({\bf Y} - {\bf W} {\bf S}\right) \right|^2.
+\end{equation}
+where $\lambda$ is a positive number.
+
+\item 
+\label{E4.3-3}
+{\bf Multilayer Linear Network Interpretation of SVD}
+Let ${\bf y}_i$ be the desired response column vector pattern for input column pattern vector
+${\bf s}_i$ for $i = 1, \ldots, n$. 
+Let $\ddot{\bf y}_i({\bf W}, {\bf V}) \equiv {\bf W} {\bf h}_i({\bf V})$ and
+${\bf h}_i({\bf V}) \equiv {\bf V} {\bf s}_i$.
+The column vector $\ddot{\bf y}_i({\bf W}, {\bf V})$ is interpreted as the 
+state of the output units of a multilayer linear feedforward network generated from the
+state of the hidden units, ${\bf h}_i({\bf V})$, which in turn are 
+generated from the input pattern ${\bf s}_i$.
+The goal of learning is to minimize the objective function
+$\ell$ defined such that:
+\begin{displaymath}
+\ell({\bf W}, {\bf V}) = (1/n) \sum_{i=1}^n |{\bf y}_i - \ddot{\bf y}_i({\bf W}, {\bf V})|^2.
+\end{displaymath}
+Obtain a formula for a global minimizer of $\ell$ using
+singular value decomposition. In addition, discuss how this solution
+is essentially the same as the solution obtained from a gradient descent algorithm that minimizes $\ell$.
+
+\item
+\label{Ch4:Exercise:AdaptiveNaturalGradient}
+{\bf Adaptive Natural Gradient Descent}
+\index{alg}{Natural gradient descent!Iterative method}
+In some cases, the rate of convergence of the standard gradient descent algorithm can be improved
+by using the method of ``natural gradient descent''.
+An adaptive natural gradient descent algorithm may be defined as follows.
+Let $c({\bf x}, {\bfs \theta})$ denote the loss incurred by the learning machine when it observes
+the $d$-dimensional
+event ${\bf x}$ given that its parameter values are set to the value of the $q$-dimensional parameter vector ${\bfs \theta}$.
+Let ${\bf g}({\bf x}, {\bfs \theta})$ be a column vector which is defined as the transpose of the derivative
+of $c({\bf x}; {\bfs \theta})$. 
+Let ${\bf x}(0), {\bf x}(1), \ldots$ be a sequence of $d$-dimensional vectors observed by 
+an adaptive gradient descent learning machine defined by the time-varying iterated map
+\begin{displaymath}
+{\bf f}({\bfs \theta},t,{\bf x}(t)) = {\bfs \theta} - \gamma_t {\bf G}_t^{-1} {\bf g}({\bf x}(t), {\bfs \theta})
+\end{displaymath}
+where $\gamma_1, \gamma_2, \ldots$ is a sequence of strictly positive stepsizes, ${\bf G}_0 = {\bf I}_q$, and for all
+$t \in {\cal N}^{+}:$
+\begin{displaymath}
+{\bf G}_t \equiv (1/T) \sum_{s=0}^{T-1} {\bf g}({\bf x}(t-s), {\bfs \theta}) [{\bf g}({\bf x}(t-s), {\bfs \theta})]^T.
+\end{displaymath}
+Show how to use the Sherman-Morrison Theorem to design a computationally efficient way of computing
+${\bf G}_{t+1}^{-1}$ from ${\bf G}_t^{-1}$ and ${\bf x}(t+1)$ when ${\bf G}_t^{-1}$ exists.
+Express your solution in terms of a new time-varying iterated map.
+%\begin{exercise}{\bf Kernel Trick}
+%
+%\begin{verbatim}
+%Discuss Kernel Trick Here.
+%\end{verbatim}
+%
+%\end{exercise}
+\end{exerciselist}
+
+\section{Further Readings}
+This chapter covered selected standard topics from linear algebra especially
+relevant to machine learning. Students interested
+in further discussion of these and related topics may find the books by Noble (***), 
+Williams (***), and Strang (***) helpful. Some of the more esoteric matrix operations
+such as the Hadamard and Kronecker Tensor Products are discussed in the important
+books by Marlow (2013)
+and Magnus and Neudecker (***).
+
+
+
+
+
+
+
+
+% REFERENCE: Introduction to Topology by Mendelson  (main reference)
+% REFERENCE: Real Analysis by McShane and Botts
+
+
+

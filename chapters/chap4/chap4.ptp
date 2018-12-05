@@ -1,0 +1,9 @@
+# PCTeX Project File, Version 1.1
+	name: chap4
+	texformat: latex
+	typesetmode: DVI
+	spellwordlist: american
+chap4.tex
+	wndpos: 1 -1 -1 -1 -1 457 68 1612 619
+	zorder: 0
+	edit: 0
