@@ -1,0 +1,229 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+```{r echo=FALSE, include=FALSE}
+library(CDM)
+```
+
+# Data
+
+## Assessment Data
+
+```{r}
+
+str(data.ecpe$data)
+
+```
+
+
+## Q Matrix:
+
+```{r}
+
+str(data.ecpe$q.matrix)
+
+```
+
+# Model
+
+## DINA
+```{r}
+
+ecpe.dina <- din(data.ecpe$data[,-1], data.ecpe$q.matrix,progress = FALSE)
+ecpe.dina
+```
+
+### Guess parameters
+```{r}
+str(ecpe.dina$guess)
+
+```
+
+### Slip parameters
+```{r}
+str(ecpe.dina$slip)
+
+```
+
+### Coefficients, Standard errors and Confidence intervals for all parameters 
+```{r}
+
+param <- IRT.se(ecpe.dina, extended=TRUE) 
+head(param)
+```
+
+
+```{r}
+
+tail(param, 15)
+
+```
+
+Let's separate each type of parameter
+
+```{r}
+
+p <- split(param, param$partype)
+
+```
+
+### Item characteristics
+
+#### Item p-values
+
+```{r}
+
+pvalues <- colMeans(data.ecpe$data[,-1], na.rm=TRUE) 
+pvalues
+```
+
+#### Guessing parameter
+
+```{r}
+
+head(p$guess)
+
+```
+
+#### Slipping parameter
+
+```{r}
+
+head(p$slip)
+
+```
+
+#### Item Discrimination parameter
+
+```{r}
+
+omega1 <- 1 - p$guess$est - p$slip$est 
+
+omega1 
+
+```
+
+#### Item Easiness parameter
+
+```{r}
+
+omega2 <- (p$guess$est + (1 - p$slip$est))/2 
+
+omega2 
+
+```
+
+### Skills Characteristics
+
+#### Skills Distribution
+
+```{r}
+
+p$margprobs
+
+```
+
+#### Skills Class Distribution
+
+```{r}
+
+p$probs
+
+```
+
+#### Individual Skills profile
+
+```{r}
+skill.p <- IRT.factor.scores(ecpe.dina, type="MLE") 
+head(skill.p)
+```
+
+## Summarizing DINA model
+
+```{r}
+summary(ecpe.dina)
+```
+
+```{r}
+print(ecpe.dina)
+```
+
+```{r}
+par(mfrow=c(2,2)) 
+plot(ecpe.dina)
+```
+
+
+```{r}
+# parameters and standard errors of DINA model 
+param <- IRT.se(ecpe.dina, extended=TRUE) 
+p <- split(param, param$partype)
+p
+```
+
+```{r}
+# items characteristics (cf. Table 6) 
+pvalues <- colMeans(data.ecpe$data[,-1], na.rm=TRUE) # item p-values 
+p$guess # guessing parameters 
+p$slip # slipping parameters 
+omega1 <- 1 - p$guess$est - p$slip$est # item discrimination 
+omega2 <- (p$guess$est + (1 - p$slip$est))/2 # item easiness
+
+```
+
+
+```{r}
+
+# skill characteristics (cf. Table 7 and 8) 
+p$margprobs # skill distribution Q1 
+p$probs # skill class distribution Q2 
+IRT.factor.scores(ecpe.dina, type="MLE")[1:5,] # individual skill profile Q3
+```
+
+```{r}
+# plot model parameters 
+par(mfrow=c(2,2)) 
+plot(ecpe.dina, pattern=data.ecpe$data[1,-1])
+
+```
+
+
+```{r}
+
+# correlation between skills 
+skill.cor(ecpe.dina)$cor.skills
+# various fit criteria 
+fit.ecpe <- IRT.modelfit(ecpe.dina)
+```
+
+```{r}
+
+# new Q-matrices 
+newq13 <- newq23 <- data.ecpe$q.matrix 
+newq13[,4] <- 1*(newq13[,1]==1 | newq13[,3]==1) 
+newq23[,4] <- 1*(newq23[,2]==1 | newq23[,3]==1) 
+newq13 <- newq13[,c(2,4)] 
+newq23 <- newq23[,c(1,4)]
+```
+
+```{r}
+
+# define, estimate and derive model fit of competing models 
+ecpe13 <- din(data.ecpe$data[,-1], newq13) 
+fit.ecpe13 <- IRT.modelfit(ecpe13) 
+ecpe23 <- din(data.ecpe$data[,-1], newq23) 
+fit.ecpe23 <- IRT.modelfit(ecpe23)
+```
+
+```{r}
+# compare competing models 
+IRT.compareModels(fit.ecpe, fit.ecpe13, fit.ecpe23)
+
+
+```
+
