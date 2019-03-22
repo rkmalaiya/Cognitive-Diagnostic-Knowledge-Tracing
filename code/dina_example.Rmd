@@ -1,6 +1,8 @@
 ---
 title: "DINA model on ECPE Dataset"
 output:
+  html_document:
+    df_print: paged
   html_notebook: default
   pdf_document: default
 ---
