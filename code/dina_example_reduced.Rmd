@@ -1,10 +1,10 @@
 ---
 title: "DINA model on ECPE Dataset"
 output:
+  pdf_document: default
+  html_notebook: default
   html_document:
     df_print: paged
-  html_notebook: default
-  pdf_document: default
 ---
 
 
@@ -23,11 +23,14 @@ str(data.ecpe$data)
 ```
 
 ```{r}
+data.ecpe.sample_10 = sample_n(data.ecpe$data, size = 10)
+data.ecpe.sample_20 = sample_n(data.ecpe$data, size = 20)
 data.ecpe.sample_30 = sample_n(data.ecpe$data, size = 30)
 data.ecpe.sample_33 = sample_n(data.ecpe$data, size = 30) # 10 % more than total number of variables
 data.ecpe.sample_36 = sample_n(data.ecpe$data, size = 36) # 20 % more than total number of variables
 data.ecpe.sample_45 = sample_n(data.ecpe$data, size = 45) # 50 % more than total number of variables
 data.ecpe.sample_60 = sample_n(data.ecpe$data, size = 60) # 100 % more than total number of variables
+data.ecpe.sample_100 = sample_n(data.ecpe$data, size = 100) # 100 % more than total number of variables
 str(data.ecpe.sample_30)
 ```
 
@@ -50,6 +53,19 @@ ecpe.dina
 ```
 
 ### Generate model for different sample size
+
+```{r}
+
+ecpe.dina.sample_10 <- din(data.ecpe.sample_10[,-1], data.ecpe$q.matrix,progress = FALSE)
+ecpe.dina.sample_10
+```
+
+```{r}
+
+ecpe.dina.sample_20 <- din(data.ecpe.sample_20[,-1], data.ecpe$q.matrix,progress = FALSE)
+ecpe.dina.sample_20
+```
+
 ```{r}
 
 ecpe.dina.sample_30 <- din(data.ecpe.sample_30[,-1], data.ecpe$q.matrix,progress = FALSE)
@@ -77,14 +93,48 @@ ecpe.dina.sample_60 <- din(data.ecpe.sample_60[,-1], data.ecpe$q.matrix,progress
 ecpe.dina.sample_60
 ```
 
+
+```{r}
+ecpe.dina.sample_100 <- din(data.ecpe.sample_100[,-1], data.ecpe$q.matrix,progress = FALSE)
+ecpe.dina.sample_100
+```
+
 ### Compare DINA models with different sample size
 
 ```{r}
 
-IRT.compareModels(ecpe.dina, ecpe.dina.sample_30, ecpe.dina.sample_33, ecpe.dina.sample_36, ecpe.dina.sample_45, ecpe.dina.sample_60)
+ecpe.dina.full_2922 <- ecpe.dina
+
+compare.model <- IRT.compareModels(ecpe.dina.sample_10, ecpe.dina.sample_20, ecpe.dina.sample_30, ecpe.dina.sample_33, ecpe.dina.sample_36, ecpe.dina.sample_45, ecpe.dina.sample_60, ecpe.dina.sample_100, ecpe.dina.full_2922)
+
+
+compare.model$IC[,'Sample Size'] <- c(10, 20, 30, 33, 36, 45, 60, 100, 2922)
+compare.model$IC[,'AIC_normalized'] <- compare.model$IC[,'AIC'] / c(10, 20, 30, 33, 36, 45, 60, 100, 2922) 
+compare.model$IC[,'loglike_normalized'] <- compare.model$IC[,'loglike'] / c(10, 20, 30, 33, 36, 45, 60, 100, 2922) 
+
+compare.model$IC[,c('Model', 'Sample Size', 'AIC_normalized')] # c('Model','loglike_normalized', 'AIC_normalized')
+compare.model$IC[,c('Model', 'Sample Size', 'loglike', 'AIC')]
+```
+
+### Get model fit
+
+```{r}
+
+fit.ecpe <- IRT.modelfit(ecpe.dina)
+fit.ecpe.sample_30 <- IRT.modelfit(ecpe.dina.sample_30)
+fit.ecpe.sample_33 <- IRT.modelfit(ecpe.dina.sample_33)
+fit.ecpe.sample_36 <- IRT.modelfit(ecpe.dina.sample_36)
+fit.ecpe.sample_45 <- IRT.modelfit(ecpe.dina.sample_45)
+fit.ecpe.sample_60 <- IRT.modelfit(ecpe.dina.sample_60)
+fit.ecpe.sample_100 <- IRT.modelfit(ecpe.dina.sample_100)
 
 ```
 
+```{r}
+
+IRT.compareModels(fit.ecpe, fit.ecpe.sample_30, fit.ecpe.sample_33, fit.ecpe.sample_36, fit.ecpe.sample_45, fit.ecpe.sample_60, fit.ecpe.sample_100)
+
+```
 
 ## Details of DINA model
 
